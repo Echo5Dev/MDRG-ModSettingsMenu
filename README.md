@@ -25,7 +25,7 @@ TODO: insert preview here
 
 ## For Modders
 
-**IMPORTANT**: to avoid compatibility issues and more, please do NOT redistribute modified version of the MSM. <br>
+**IMPORTANT**: to avoid compatibility issues and more, please do NOT redistribute a modified version of the MSM. <br>
 Feel free to request changes or features here, or by reaching out on the MDRG Discord server. <br> <br>
 **Full API documentation**: TODO documentation link
 
