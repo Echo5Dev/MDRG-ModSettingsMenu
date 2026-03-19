@@ -39,9 +39,9 @@ Feel free to request changes or features here, or by reaching out on the MDRG Di
 
 ### Notes
 * Call the MSM during `OnInitializeMelon()`
-* When registering your mod, the modID must be unique, and displayName is what users will see in the MSM menu.
+* When registering your mod, the modID must be unique, and displayName is what users will see in the MSM menu
 * The MSM offers two panels (left/right) to organize your settings
-* Order matters: the UI elements will be created in the order you declared them, per panel (left/right).
+* Order matters: the UI elements will be created in the order you declared them, per panel (left/right)
 * MSM does not save values by itself. You must handle saving/loading yourself (eg. MelonPreferences)
 * All logic such as saving values should be handled inside the provided actions (`onClick`, `onChanged`, etc.)
 * Supported UI elements:
@@ -51,6 +51,7 @@ Feel free to request changes or features here, or by reaching out on the MDRG Di
   * Dropdown Menus
   * Buttons
   * Padding (for visual)
+ * The "Example Mods" seen on the preview can be found on the project [here](https://github.com/Echo5Dev/MDRG-ModSettingsMenu/blob/main/ExampleModMSM/ExampleModMSM.cs) 
 
 ### Minimal Example
 ```
