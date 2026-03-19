@@ -1,8 +1,11 @@
 # Mod Settings Menu (MSM)
-**Download**: TODO releases link
+**Download**: [Latest Release](https://github.com/Echo5Dev/MDRG-ModSettingsMenu/releases/)
 
 MSM is a framework mod for MDRG that allows mod developers to easily add a configurable settings menu for their mod.<br>
 The MSM menu is accessed via a new button in the Options menu.
+
+### Preview
+![](https://raw.githubusercontent.com/Echo5Dev/MDRG-ModSettingsMenu/refs/heads/main/MSMPreview.png)
 
 ### Features
 * Easy to use API
@@ -15,12 +18,11 @@ The MSM menu is accessed via a new button in the Options menu.
 * MDRG v0.95
 > Also works on v0.90, and should hopefully be compatible with future versions too
 
-TODO: insert preview here
-
 ## For Users
-1. Ensure you have MelonLoader v0.7.2+ installed in your game. <br>https://github.com/LavaGang/MelonLoader/releases
-2. Drop the mod file (`ModSettingsMenu.dll`) into your game `Mods` folder.
-3. Open the MSM menu using the new button in the Options menu.
+1. Ensure you have MelonLoader v0.7.2+ installed in your game: [/LavaGang/MelonLoader/releases](https://github.com/LavaGang/MelonLoader/releases)
+2. Download `ModSettingsMenu.zip` from the [releases](https://github.com/Echo5Dev/MDRG-ModSettingsMenu/releases/)
+3. Open the .zip file and drop the mod file (`ModSettingsMenu.dll`) into your game `Mods` folder.
+4. Open the MSM menu using the new button in the Options menu.
 
 
 ## For Modders
