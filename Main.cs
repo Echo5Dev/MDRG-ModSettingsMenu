@@ -8,7 +8,7 @@ using System.Reflection;
 
 [assembly: MelonInfo(typeof(ModSettingsMenu.MSM), "ModSettingsMenu", "1.0.0", "Echo")]
 [assembly: MelonGame("IncontinentCell", "My Dystopian Robot Girlfriend")]
-[assembly: MelonPriority(int.MaxValue)]
+[assembly: MelonPriority(int.MinValue)]
 
 //*****
 // This file contains the Melon mod itself, the Harmony patching, and anything API for the other mods to use

@@ -96,7 +96,14 @@ namespace ModSettingsMenu
             var modsPopup = UiOverlay.Instance._modsPopupRef?.Load();
             if (modsPopup == null)
                 return;
-            var original = modsPopup.transform.Find("Content/Right/Scroll View").gameObject;
+            var scrollRect = modsPopup.GetComponentInChildren<ScrollRect>(true);
+            if (scrollRect == null)
+            {
+                MelonLogger.Error("MSM: No ScrollRect found in ModsPopup!");
+                return;
+            }
+
+            var original = scrollRect.gameObject;
 
             ScrollListTemplate = UnityEngine.Object.Instantiate(original, _templateRoot.transform);
             ScrollListTemplate.name = "TemplateScrollList";
