@@ -296,12 +296,19 @@ namespace ModSettingsMenu
 
             UpdateLabel(initialValue);
 
+            float lastValue = float.NaN;
+
             sb.onValueChanged.AddListener((Action<float>)(normalized =>
             {
                 float realValue = min + normalized * (max - min);
 
                 if (steps > 1)
                     realValue = Mathf.Round(realValue);
+
+                if (Mathf.Approximately(realValue, lastValue))
+                    return;
+
+                lastValue = realValue;
 
                 UpdateLabel(realValue);
                 listener(realValue);

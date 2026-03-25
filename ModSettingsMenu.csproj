@@ -12,6 +12,12 @@
     <ModsDir>$(GameDir)\Mods</ModsDir>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ExampleModMSM\**" />
+    <EmbeddedResource Remove="ExampleModMSM\**" />
+    <None Remove="ExampleModMSM\**" />
+  </ItemGroup>
+
   <!-- MelonLoader -->
   <ItemGroup>
     <Reference Include="MelonLoader">
