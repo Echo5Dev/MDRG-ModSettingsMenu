@@ -71,9 +71,12 @@ namespace ModSettingsMenu
             closeBtn.onClick.RemoveAllListeners();
             closeBtn.onClick.AddListener((Action)(() =>
             {
-                // Close our window and reopen the options popup
+                // Close our window and reopen the options popup if not closed
                 UnityEngine.Object.Destroy(_modWindow);
-                originalPopup.gameObject.SetActive(true);
+                if (originalPopup != null)
+                {
+                    originalPopup.gameObject.SetActive(true);
+                }
             }));
             
             // Modify the window's size & Setting Panel
