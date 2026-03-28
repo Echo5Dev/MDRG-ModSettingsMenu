@@ -215,15 +215,6 @@ namespace ModSettingsMenu
             _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Dropdown, label, options, index, onChanged));
         }
 
-        //*****
-        // Refreshes the mod's settings, updating the UI with potentially changed values
-        // Usefull in the case of a "Restore defaults" button
-        //*****
-        public static void RefreshDisplay()
-        {
-            MSMUI.RefreshDisplay();
-        }
-
     }
 
     //******************************************

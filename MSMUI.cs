@@ -199,16 +199,6 @@ namespace ModSettingsMenu
             _modWindow.SetActive(true);
         }
 
-        //*****
-        // Refreshes the mod's settings, updating the UI
-        //*****
-        public static void RefreshDisplay()
-        {
-            _settingsPanel.gameObject.SetActive(false);
-            _settingsPanel.gameObject.SetActive(true);
-        }
-
-
         //******************************************
         //         Delayed builders logic
         //******************************************
