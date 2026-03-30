@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Change this to your game install directory -->
-    <GameDir>D:\Games\MDRG 0.96\Factorial Omega</GameDir>
+    <GameDir>D:\Games\MDRG 0.96\Factorial Omega - Melon Loader</GameDir>
 
     <TargetFramework>net472</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
