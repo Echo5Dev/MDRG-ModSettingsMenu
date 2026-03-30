@@ -15,7 +15,7 @@ The MSM menu is accessed via a new button in the Options menu.
 
 ### Compatibility
 * MelonLoader v0.7.2+
-* MDRG v0.95
+* MDRG v0.95+
 > Also works on v0.90, and should hopefully be compatible with future versions too
 
 ## For Users
