@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-[assembly: MelonInfo(typeof(ModSettingsMenu.MSM), "ModSettingsMenu", "1.0.1", "Echo")]
+[assembly: MelonInfo(typeof(ModSettingsMenu.MSM), "ModSettingsMenu", "1.1.0", "Echo")]
 [assembly: MelonGame("IncontinentCell", "My Dystopian Robot Girlfriend")]
 [assembly: MelonPriority(int.MinValue)]
 
