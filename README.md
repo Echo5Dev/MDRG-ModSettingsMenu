@@ -76,14 +76,14 @@ public class ExampleModMSM : MelonMod
             string modId = "exampleMod";
             var left = PanelSide.LeftPanel;
             var right = PanelSide.RightPanel;
-            Action<bool> dummyToggleAction = (Action<bool>)(value =>
+            Action<bool> exampleToggleAction = (Action<bool>)(value =>
             { 
                 _exampleSetting.Value = value;
                 _exampleCategory.SaveToFile(true);
             });
 
             MSM.RegisterMod(modId, "Example Mod");
-            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", _exampleSetting, dummyToggleAction);
+            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", () => _exampleSetting.Value, exampleToggleAction);
         }
     }
 ```
