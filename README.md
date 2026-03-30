@@ -55,7 +55,7 @@ Feel free to request changes or features here, or by reaching out on the MDRG Di
 
 ### Minimal Example
 ```
-public class ExampleModMSM : MelonMod
+public class MSMExampleMod : MelonMod
     {
         private static MelonPreferences_Category _exampleCategory;
         private static MelonPreferences_Entry<bool> _exampleSetting;
@@ -63,8 +63,8 @@ public class ExampleModMSM : MelonMod
         public override void OnInitializeMelon()
         {
             // Load settings
-            _exampleCategory = MelonPreferences.CreateCategory("CategoryName");
-            _exampleSetting = _exampleCategory.CreateEntry("Enabled", true, "Enable Setting");
+            _exampleCategory = MelonPreferences.CreateCategory("My Mod Name");
+            _exampleSetting = _exampleCategory.CreateEntry("Enabled", true);
             _exampleCategory.SaveToFile(true);
 
             // Initialize MSM
@@ -76,14 +76,14 @@ public class ExampleModMSM : MelonMod
             string modId = "exampleMod";
             var left = PanelSide.LeftPanel;
             var right = PanelSide.RightPanel;
-            Action<bool> dummyToggleAction = (Action<bool>)(value =>
+            Action<bool> exampleToggleAction = (Action<bool>)(value =>
             { 
                 _exampleSetting.Value = value;
                 _exampleCategory.SaveToFile(true);
             });
 
             MSM.RegisterMod(modId, "Example Mod");
-            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", _exampleSetting, dummyToggleAction);
+            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", () => _exampleSetting.Value, exampleToggleAction); // () => _exampleSetting.Value is the starting value
         }
     }
 ```
