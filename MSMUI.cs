@@ -213,16 +213,7 @@ namespace ModSettingsMenu
             {
                 try
                 {
-                    Utilities.BuildButton(_modsListRoot, mod.DisplayName, (Action)(() =>
-                    {
-                        Utilities.ClearChildren(_leftPanel);
-                        Utilities.ClearChildren(_rightPanel);
-                        Utilities.BuildLabel(_leftPanel, "Mod Title", mod.DisplayName, Utilities.FontSize.Large);
-                        Utilities.BuildPadding(_leftPanel, 0);
-                        Utilities.BuildLabel(_rightPanel, "Empty Space", " ", Utilities.FontSize.Large);
-                        Utilities.BuildPadding(_rightPanel, 0);
-                        BuildModSettings(mod.ModId);
-                    }), CommonButtonColorType.Alternative);
+                    Utilities.BuildButton(_modsListRoot, mod.DisplayName, (Action)(() => {  BuildModSettings(mod.ModId); }), CommonButtonColorType.Alternative);
                 }
                 catch (Exception ex)
                 {
@@ -236,6 +227,13 @@ namespace ModSettingsMenu
         //*****
         public static void BuildModSettings(string modid)
         {
+            Utilities.ClearChildren(_leftPanel);
+            Utilities.ClearChildren(_rightPanel);
+            Utilities.BuildLabel(_leftPanel, "Mod Title", MSM._mods[modid].DisplayName, Utilities.FontSize.Large);
+            Utilities.BuildPadding(_leftPanel, 0);
+            Utilities.BuildLabel(_rightPanel, "Empty Space", " ", Utilities.FontSize.Large);
+            Utilities.BuildPadding(_rightPanel, 0);
+
             int settingID = 0;
             Transform panel;
 
@@ -341,6 +339,12 @@ namespace ModSettingsMenu
             }
             // Fallback return if something unexpected happens
             return CommonButtonSizeEnum.Normal;
+        }
+
+        // Rebuilds the setting list, for refreshing
+        internal static void RebuildWindow(string modid)
+        {
+            BuildModSettings(modid);
         }
     }
 }

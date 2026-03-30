@@ -218,6 +218,14 @@ namespace ModSettingsMenu
             _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Dropdown, label, options, getIndex, onChanged, tooltip));
         }
 
+        //*****
+        // Refreshes the UI
+        //*****
+        public static void RefreshSettings(string modId)
+        {
+            MSMUI.RebuildWindow(modId);
+        }
+
     }
 
     //******************************************
