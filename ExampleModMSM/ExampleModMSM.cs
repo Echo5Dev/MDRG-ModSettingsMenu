@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [assembly: MelonInfo(typeof(MDRG_MSMExampleMod.MSMExampleMod), "ExampleModMSM", "1.0.0", "Echo")]
 [assembly: MelonGame("IncontinentCell", "My Dystopian Robot Girlfriend")]
 
-namespace ExampleModMSM
+namespace MDRG_MSMExampleMod
 {
     public class MSMExampleMod : MelonMod
     {
