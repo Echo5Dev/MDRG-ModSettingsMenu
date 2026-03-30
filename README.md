@@ -83,7 +83,7 @@ public class ExampleModMSM : MelonMod
             });
 
             MSM.RegisterMod(modId, "Example Mod");
-            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", false, dummyToggleAction);
+            MSM.AddCheckbox(modId, left, "Checkbox Setting Name", _exampleSetting, dummyToggleAction);
         }
     }
 ```
