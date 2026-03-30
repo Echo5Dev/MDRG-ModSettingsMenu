@@ -243,6 +243,7 @@ namespace ModSettingsMenu
             {
                 try
                 {
+                    GameObject goOut;
                     if (setting.Panel == PanelSide.LeftPanel)
                         panel = _leftPanel;
                     else panel = _rightPanel;
@@ -250,27 +251,37 @@ namespace ModSettingsMenu
                     switch (setting.Type)
                     {
                         case SettingType.Label:
-                            Utilities.BuildLabel(panel, modid+settingID+"Label", setting.Label, setting.LabelSize);
+                            goOut = Utilities.BuildLabel(panel, modid+settingID+"Label", setting.Label, setting.LabelSize);
+                            if(!string.IsNullOrEmpty(setting.Tooltip))
+                                Utilities.AddTooltip(goOut, setting.Tooltip);
                             break;
 
                         case SettingType.Button:
-                            Utilities.BuildButton(panel, setting.Label, setting.ButtonAction, BtnColorConvert(setting.ButtonColor), BtnSizeConvert(setting.ButtonSize));
+                            goOut = Utilities.BuildButton(panel, setting.Label, setting.ButtonAction, BtnColorConvert(setting.ButtonColor), BtnSizeConvert(setting.ButtonSize));
+                            if (!string.IsNullOrEmpty(setting.Tooltip))
+                                Utilities.AddTooltip(goOut, setting.Tooltip);
                             break;
 
                         case SettingType.Checkbox:
-                            Utilities.BuildToggle(panel, modid+settingID+"Checkbox", setting.Label, setting.StartValueB, setting.CheckboxAction);
+                            goOut = Utilities.BuildToggle(panel, modid+settingID+"Checkbox", setting.Label, setting.StartValueB(), setting.CheckboxAction);
+                            if (!string.IsNullOrEmpty(setting.Tooltip))
+                                Utilities.AddTooltip(goOut, setting.Tooltip);
                             break;
 
                         case SettingType.Slider:
-                            Utilities.BuildLabel(panel, modid+settingID +"Label", setting.Label, Utilities.FontSize.Small);
-                            Utilities.BuildScrollbar(panel, modid+settingID+"Slider", setting.Min, setting.Max, setting.StartValueF, setting.Steps, setting.SliderAction);
+                            goOut = Utilities.BuildLabel(panel, modid+settingID +"Label", setting.Label, Utilities.FontSize.Small);
+                            if (!string.IsNullOrEmpty(setting.Tooltip))
+                                Utilities.AddTooltip(goOut, setting.Tooltip);
+                            Utilities.BuildScrollbar(panel, modid+settingID+"Slider", setting.Min, setting.Max, setting.StartValueF(), setting.Steps, setting.SliderAction);
                             break;
                         case SettingType.Padding:
                             Utilities.BuildPadding(panel, 30);
                             break;
                         case SettingType.Dropdown:
-                            Utilities.BuildLabel(panel, modid + settingID + "Label", setting.Label, Utilities.FontSize.Small);
-                            Utilities.BuildDropdown(panel, modid + settingID + "Dropdown", setting.DropdownOptions, setting.DropdownIndex, setting.DropdownAction);
+                            goOut = Utilities.BuildLabel(panel, modid + settingID + "Label", setting.Label, Utilities.FontSize.Small);
+                            if (!string.IsNullOrEmpty(setting.Tooltip))
+                                Utilities.AddTooltip(goOut, setting.Tooltip);
+                            Utilities.BuildDropdown(panel, modid + settingID + "Dropdown", setting.DropdownOptions, setting.DropdownIndex(), setting.DropdownAction);
                             break;
                     }
                     settingID++;

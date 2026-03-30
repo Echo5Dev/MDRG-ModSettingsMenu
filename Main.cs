@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-[assembly: MelonInfo(typeof(ModSettingsMenu.MSM), "ModSettingsMenu", "1.0.0", "Echo")]
+[assembly: MelonInfo(typeof(ModSettingsMenu.MSM), "ModSettingsMenu", "1.0.1", "Echo")]
 [assembly: MelonGame("IncontinentCell", "My Dystopian Robot Girlfriend")]
 [assembly: MelonPriority(int.MinValue)]
 
@@ -114,59 +114,59 @@ namespace ModSettingsMenu
         //*****
         // Adds a new Label with the given parameters to the given mod
         //*****
-        public static void AddLabel(string modId, PanelSide side, string text, Utilities.FontSize fontSize = Utilities.FontSize.Medium)
+        public static void AddLabel(string modId, PanelSide side, string text, Utilities.FontSize fontSize = Utilities.FontSize.Medium, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
                 MelonLogger.Error($"MSM: Mod '{modId}' not registered.");
                 return;
             }
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Label, text, fontSize));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Label, text, fontSize, tooltip));
         }
 
         //*****
         // Adds a new Button with the given parameters to the given mod
         //*****
-        public static void AddButton(string modId, PanelSide side, string label, Action onClick, ButtonColor buttonColor = ButtonColor.Blue, ButtonSize buttonSize = ButtonSize.Normal)
+        public static void AddButton(string modId, PanelSide side, string label, Action onClick, ButtonColor buttonColor = ButtonColor.Blue, ButtonSize buttonSize = ButtonSize.Normal, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
                 MelonLogger.Error($"MSM: Mod '{modId}' not registered.");
                 return;
             }
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Button, label, onClick, buttonColor, buttonSize));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Button, label, onClick, buttonColor, buttonSize, tooltip));
         }
 
         //*****
         // Adds a new Checkbox with the given parameters to the given mod
         //*****
-        public static void AddCheckbox(string modId, PanelSide side, string label, bool startValue, Action<bool> onClick)
+        public static void AddCheckbox(string modId, PanelSide side, string label, Func<bool> startValue, Action<bool> onClick, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
                 MelonLogger.Error($"MSM: Mod '{modId}' not registered.");
                 return;
             }
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Checkbox, label, startValue, onClick));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Checkbox, label, startValue, onClick, tooltip));
         }
 
         //*****
         // Adds a new Slider (float) with the given parameters to the given mod
         //*****
-        public static void AddSlider(string modId, PanelSide side, string label, float min, float max, float startValue, int steps, Action<float> onChanged)
+        public static void AddSlider(string modId, PanelSide side, string label, float min, float max, Func<float> startValue, int steps, Action<float> onChanged, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
                 MelonLogger.Error($"MSM: Mod '{modId}' not registered.");
                 return;
             }
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Slider, label, min, max, startValue, steps, onChanged));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Slider, label, min, max, startValue, steps, onChanged, tooltip));
         }
 
         //*****
         // Adds a new Slider (int) with the given parameters to the given mod
         //*****
-        public static void AddSlider(string modId, PanelSide side, string label, int min, int max, int startValue, Action<int> onChanged)
+        public static void AddSlider(string modId, PanelSide side, string label, int min, int max, Func<int> startValue, Action<int> onChanged, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
@@ -182,7 +182,7 @@ namespace ModSettingsMenu
                 onChanged(intValue);
             };
 
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Slider, label, (float)min, (float)max, (float)startValue, steps, wrappedAction));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Slider, label, (float)min, (float)max, () => (float)startValue(), steps, wrappedAction, tooltip));
         }
 
         //*****
@@ -201,7 +201,7 @@ namespace ModSettingsMenu
         //*****
         // Adds a new Dropdown with the given parameters to the given mod
         //*****
-        public static void AddDropdown(string modId, PanelSide side, string label, List<string> options, string defaultValue, Action<string> onChanged)
+        public static void AddDropdown(string modId, PanelSide side, string label, List<string> options, Func<string> defaultValue, Action<string> onChanged, string tooltip = "")
         {
             if (!_mods.TryGetValue(modId, out var mod))
             {
@@ -209,10 +209,13 @@ namespace ModSettingsMenu
                 return;
             }
 
-            int index = options.IndexOf(defaultValue);
-            if (index < 0) index = 0;
+            Func<int> getIndex = () =>
+            {
+                int idx = options.IndexOf(defaultValue());
+                return idx >= 0 ? idx : 0;
+            };
 
-            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Dropdown, label, options, index, onChanged));
+            _mods[modId].Settings.Add(new SettingDefinition(side, SettingType.Dropdown, label, options, getIndex, onChanged, tooltip));
         }
 
     }
@@ -277,6 +280,8 @@ namespace ModSettingsMenu
         public SettingType Type;    // Type of Setting UI element
         public PanelSide Panel;     // On which side of the Mod's settings menu this element should appear
 
+        public string Tooltip;
+
         // *** Optional fields depending on Type
         // Labels stuff
         public string Label;
@@ -289,32 +294,33 @@ namespace ModSettingsMenu
 
         // Checkboxes stuff
         public Action<bool> CheckboxAction;
-        public bool StartValueB;
+        public Func<bool> StartValueB;
 
         // Sliders stuff
         public Action<float> SliderAction;
         public float Min;
         public float Max;
-        public float StartValueF;
+        public Func<float> StartValueF;
         public int Steps;
 
         // Dropdowns stuff
         public Action<string> DropdownAction;
         public List<string> DropdownOptions;
-        public int DropdownIndex;
+        public Func<int> DropdownIndex;
 
 
         //ctor Label
-        public SettingDefinition(PanelSide panel, SettingType type, string label, Utilities.FontSize labelSize)
+        public SettingDefinition(PanelSide panel, SettingType type, string label, Utilities.FontSize labelSize, string tooltip)
         {
             Panel = panel;
             Type = type;
             Label = label;
             LabelSize = labelSize;
+            Tooltip = tooltip;
         }
 
         //ctor Button
-        public SettingDefinition(PanelSide panel, SettingType type, string label, Action onClick, ButtonColor buttonColor, ButtonSize buttonSize)
+        public SettingDefinition(PanelSide panel, SettingType type, string label, Action onClick, ButtonColor buttonColor, ButtonSize buttonSize, string tooltip)
         {
             Panel = panel;
             Type = type;
@@ -322,20 +328,22 @@ namespace ModSettingsMenu
             ButtonAction = onClick;
             ButtonColor = buttonColor;
             ButtonSize = buttonSize;
+            Tooltip = tooltip;
         }
 
         //ctor Checkbox
-        public SettingDefinition(PanelSide panel, SettingType type, string label, bool startValue, Action<bool> onClick)
+        public SettingDefinition(PanelSide panel, SettingType type, string label, Func<bool> startValue, Action<bool> onClick, string tooltip)
         {
             Panel = panel;
             Type = type;
             Label = label;
             CheckboxAction = onClick;
             StartValueB = startValue;
+            Tooltip = tooltip;
         }
 
         //ctor Slider
-        public SettingDefinition(PanelSide panel, SettingType type, string label, float min, float max, float startValue, int steps, Action<float> onChanged)
+        public SettingDefinition(PanelSide panel, SettingType type, string label, float min, float max, Func<float> startValue, int steps, Action<float> onChanged, string tooltip)
         {
             Panel = panel;
             Type = type;
@@ -345,17 +353,11 @@ namespace ModSettingsMenu
             StartValueF = startValue;
             Steps = steps;
             SliderAction = onChanged;
-        }
-
-        //ctor Padding
-        public SettingDefinition(PanelSide panel, SettingType type)
-        {
-            Panel = panel;
-            Type = type;
+            Tooltip = tooltip;
         }
 
         //ctor Dropdown
-        public SettingDefinition(PanelSide panel, SettingType type, string label, List<string> options, int defaultIndex, Action<string> onChanged)
+        public SettingDefinition(PanelSide panel, SettingType type, string label, List<string> options, Func<int> defaultIndex, Action<string> onChanged, string tooltip)
         {
             Panel = panel;
             Type = type;
@@ -363,6 +365,14 @@ namespace ModSettingsMenu
             DropdownOptions = options;
             DropdownIndex = defaultIndex;
             DropdownAction = onChanged;
+            Tooltip = tooltip;
+        }
+
+        //ctor Padding
+        public SettingDefinition(PanelSide panel, SettingType type)
+        {
+            Panel = panel;
+            Type = type;
         }
     }
 }

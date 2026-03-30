@@ -450,7 +450,7 @@ namespace ModSettingsMenu
         }
 
         //*****
-        //The following deletes all children from a passed Transform (e.g. for mod settings popup)
+        // Deletes all children from a passed Transform (e.g. for mod settings popup)
         //*****
         public static void ClearChildren(Transform parent)
         {
@@ -460,6 +460,16 @@ namespace ModSettingsMenu
                 var child = parent.GetChild(i);
                 UnityEngine.Object.Destroy(child.gameObject);
             }
+        }
+
+
+        //*****
+        // Add a tooltip component to the passed GO
+        //*****
+        public static void AddTooltip(GameObject parent, string text)
+        {
+            var tooltip = parent.AddComponent<TooltipDisplayArea>();
+            tooltip.tooltipText = text;
         }
 
     }
