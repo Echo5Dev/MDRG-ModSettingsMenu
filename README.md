@@ -55,7 +55,7 @@ Feel free to request changes or features here, or by reaching out on the MDRG Di
 
 ### Minimal Example
 ```
-public class ExampleModMSM : MelonMod
+public class MSMExampleMod : MelonMod
     {
         private static MelonPreferences_Category _exampleCategory;
         private static MelonPreferences_Entry<bool> _exampleSetting;
@@ -63,8 +63,8 @@ public class ExampleModMSM : MelonMod
         public override void OnInitializeMelon()
         {
             // Load settings
-            _exampleCategory = MelonPreferences.CreateCategory("CategoryName");
-            _exampleSetting = _exampleCategory.CreateEntry("Enabled", true, "Enable Setting");
+            _exampleCategory = MelonPreferences.CreateCategory("My Mod Name");
+            _exampleSetting = _exampleCategory.CreateEntry("Enabled", true);
             _exampleCategory.SaveToFile(true);
 
             // Initialize MSM
