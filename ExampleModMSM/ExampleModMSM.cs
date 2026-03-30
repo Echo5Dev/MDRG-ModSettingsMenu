@@ -82,7 +82,7 @@ namespace MDRG_MSMExampleMod
 
             // Building the settings
             MSM.AddLabel(modId, left, "Settings Category A");
-            MSM.AddCheckbox(modId, left, "Checkbox Setting A", () => _exampleCheckboxSetting1.Value, exampleToggleAction1);
+            MSM.AddCheckbox(modId, left, "Checkbox Setting A", () => _exampleCheckboxSetting1.Value, exampleToggleAction1, "Tooltip example A.");
             MSM.AddCheckbox(modId, left, "Checkbox Setting B", () => _exampleCheckboxSetting2.Value, exampleToggleAction2);
             MSM.AddPadding(modId, right);
             MSM.AddCheckbox(modId, right, "Checkbox Setting C", () => _exampleCheckboxSetting2.Value, exampleToggleAction2);
@@ -90,7 +90,7 @@ namespace MDRG_MSMExampleMod
 
             MSM.AddPadding(modId, left);
             MSM.AddLabel(modId, left, "Settings Category B");
-            MSM.AddSlider(modId, left, "Slider Setting A", 0, 10, () => _exampleSliderSetting1.Value, exampleSliderAction1);
+            MSM.AddSlider(modId, left, "Slider Setting A", 0, 10, () => _exampleSliderSetting1.Value, exampleSliderAction1, "Tooltip example B.");
             MSM.AddSlider(modId, left, "Slider Setting B", 0, 100, () => _exampleSliderSetting2.Value, exampleSliderAction1);
             MSM.AddPadding(modId, right);
             MSM.AddPadding(modId, right);
@@ -102,7 +102,7 @@ namespace MDRG_MSMExampleMod
             MSM.AddButton(modId, left, "Some Button", exampleButtonAction, ButtonColor.Blue);
             MSM.AddPadding(modId, right);
             MSM.AddLabel(modId, right, "Other button's explanation", Utilities.FontSize.Small);
-            MSM.AddButton(modId, right, "Some Small Red Button", exampleButtonAction, ButtonColor.Red, ButtonSize.Smaller);
+            MSM.AddButton(modId, right, "Some Small Red Button", exampleButtonAction, ButtonColor.Red, ButtonSize.Smaller, "Tooltip example C.");
 
             MSM.AddPadding(modId, left);
             MSM.AddDropdown(modId, left, "Dropdown Setting", dropdownOptions, () => _exampleDropdownSetting.Value, exampleDropdownAction);
