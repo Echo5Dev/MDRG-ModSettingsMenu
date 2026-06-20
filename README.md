@@ -29,7 +29,7 @@ The MSM menu is accessed via a new button in the Options menu.
 
 **IMPORTANT**: to avoid compatibility issues and more, please do NOT redistribute a modified version of the MSM. <br>
 Feel free to request changes or features here, or by reaching out on the MDRG Discord server. <br> <br>
-**Full API documentation**: TODO documentation link
+**Full API documentation**: [API documentation](https://github.com/Echo5Dev/MDRG-ModSettingsMenu/blob/main/Documentation.md)
 
 ### How to use
 1. Download the `ModSettingsMenu.dll` and reference it in your mod project.
