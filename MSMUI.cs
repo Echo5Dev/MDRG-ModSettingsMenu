@@ -289,9 +289,15 @@ namespace ModSettingsMenu
                     MelonLogger.Error("Deferred builder error: " + ex);
                 }
             }
+
+            // Ensuring the layout is calculated & built properly
+            Utilities.RunAfterFrames(RefreshSettingsLayout);
+
         }
 
+        //*****
         // Converts enums to Il2Cpp, for ButtonColor
+        //*****
         internal static CommonButtonColorType BtnColorConvert(ButtonColor color)
         {
             try
@@ -319,7 +325,9 @@ namespace ModSettingsMenu
             return CommonButtonColorType.Alternative;
         }
 
+        //*****
         // Converts enums to Il2Cpp, for ButtonSize
+        //*****
         internal static CommonButtonSizeEnum BtnSizeConvert(ButtonSize size)
         {
             try
@@ -341,10 +349,35 @@ namespace ModSettingsMenu
             return CommonButtonSizeEnum.Normal;
         }
 
-        // Rebuilds the setting list, for refreshing
+        //*****
+        // Rebuilds the settings list, for refreshing
+        //*****
         internal static void RebuildWindow(string modid)
         {
             BuildModSettings(modid);
+        }
+
+        //*****
+        // Rebuilds the layout element, to fix the scrollbar not showing up when opening a mod with lots of settings for the first time
+        //*****
+        private static void RefreshSettingsLayout()
+        {
+            if (_leftPanel == null || _rightPanel == null || _settingsListRoot == null)
+                return;
+
+            var leftRT = _leftPanel.GetComponent<RectTransform>();
+            var rightRT = _rightPanel.GetComponent<RectTransform>();
+            var columnsRT = _rightPanel.parent?.GetComponent<RectTransform>();
+            var contentRT = _settingsListRoot.GetComponent<RectTransform>();
+
+            if (leftRT == null || rightRT == null ||
+                columnsRT == null || contentRT == null)
+                return;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(leftRT);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rightRT);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(columnsRT);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(contentRT);
         }
     }
 }

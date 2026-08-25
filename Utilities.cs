@@ -389,9 +389,11 @@ namespace ModSettingsMenu
         {
             try
             {
-                if (root == null) return false;
+                if (root == null)
+                    return false;
 
                 var t = root.transform;
+
                 for (int i = 0; i < t.childCount; i++)
                 {
                     var child = t.GetChild(i);
@@ -399,53 +401,41 @@ namespace ModSettingsMenu
                     if (child.name == childName)
                     {
                         var tmp = child.GetComponent<TextMeshProUGUI>();
+
                         if (tmp != null)
                         {
                             tmp.SetText(newText);
-                            EnforceLabel(root, newText);
+
+                            // Give the game's UI code time to do whatever
+                            // it normally does, then reapply our value.
+                            RunAfterFrames(() =>
+                            {
+                                if (root == null)
+                                    return;
+
+                                var label = root.transform.Find(childName);
+                                if (label == null)
+                                    return;
+
+                                var labelTMP = label.GetComponent<TextMeshProUGUI>();
+                                if (labelTMP != null && labelTMP.text != newText)
+                                {
+                                    labelTMP.SetText(newText);
+                                    labelTMP.ForceMeshUpdate();
+                                }
+                            }, 3);
+
                             return true;
                         }
                     }
                 }
+
                 return false;
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning("[Utilities] TrySetLabelText error: " + ex);
+                MelonLogger.Warning("[Utilities] SetChildText error: " + ex);
                 return false;
-            }
-        }
-
-        //*****
-        // The following reapplies a label change for a few frames, because I can't find what method resets the damn labels
-        //*****
-        private static void EnforceLabel(GameObject root, string desired)
-        {
-            MelonCoroutines.Start(EnforceLabelCoroutine(root, desired));
-        }
-
-        private static IEnumerator EnforceLabelCoroutine(GameObject root, string desired)
-        {
-            if (root == null) yield break;
-            int maxFrames = 3;
-            int frames = 0;
-            while (frames++ < maxFrames)
-            {
-                var t = root.transform;
-                for (int c = 0; c < t.childCount; c++)
-                {
-                    var child = t.GetChild(c);
-                    var tmp = child.GetComponent<TextMeshProUGUI>();
-                    if (tmp != null)
-                    {
-                        if (tmp.text != desired)
-                        {
-                            tmp.SetText(desired);
-                            tmp.ForceMeshUpdate();
-                        }
-                    }
-                }
-                yield return null;
             }
         }
 
@@ -470,6 +460,28 @@ namespace ModSettingsMenu
         {
             var tooltip = parent.AddComponent<TooltipDisplayArea>();
             tooltip.tooltipText = text;
+        }
+
+        //*****
+        // Delays the execution of an action after X frames
+        //*****
+        public static void RunAfterFrames(Action action, int frames = 1)
+        {
+            if (action == null)
+                return;
+
+            if (frames < 1)
+                frames = 1;
+
+            MelonCoroutines.Start(RunAfterFramesCoroutine(frames, action));
+        }
+
+        private static IEnumerator RunAfterFramesCoroutine(int frames, Action action)
+        {
+            for (int i = 0; i < frames; i++)
+                yield return null;
+
+            action?.Invoke();
         }
 
     }
