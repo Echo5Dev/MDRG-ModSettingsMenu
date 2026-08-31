@@ -15,8 +15,8 @@ The MSM menu is accessed via a new button in the Options menu.
 
 ### Compatibility
 * MelonLoader v0.7.2+
-* MDRG v0.95+
-> Also works on v0.90, and should hopefully be compatible with future versions too
+* MDRG v0.97+
+> Also works on older versions down to 0.90
 
 ## For Users
 1. Ensure you have MelonLoader v0.7.2+ installed in your game: [/LavaGang/MelonLoader/releases](https://github.com/LavaGang/MelonLoader/releases)
@@ -87,3 +87,7 @@ public class MSMExampleMod : MelonMod
         }
     }
 ```
+_______________________________________________________________<br><br>
+If you like my work, you can support me on Ko-fi. You'd be a lovely person! 💜<br><br>
+[<img width="245" height="50" alt="image" src="https://github.com/user-attachments/assets/bc6149cc-b933-4e5c-a171-ee0dfc3fdc2e" />](https://ko-fi.com/mrecho519)
+
